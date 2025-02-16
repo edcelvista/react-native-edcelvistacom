@@ -1,20 +1,33 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, View, ScrollView, useColorScheme } from 'react-native';
+import { PaperProvider, DefaultTheme } from "react-native-paper";
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import CustomHeader from '../_header';
 import CustomFooter from '../_footer';
 
+import { Colors } from "../constants/Colors";
+
 const DashboardScreen = () => {
+  const colorScheme = useColorScheme();
+  const CustomTheme = {
+      ...DefaultTheme,
+      colors: {
+          ...DefaultTheme.colors,
+          ...Colors[colorScheme === 'dark' ? 'dark' : 'light']
+      },
+  };
+
   return (
-    <>
+    <PaperProvider>
       <CustomHeader Title="Dashboard"/>
         <View style={styles.centerPlaceholderIcon}>
-          <Icon style={styles.Icon} name="cloud-off" size={35} />
-          <Text>Not Available</Text>
+          <Icon style={[styles.Icon, {color: CustomTheme.colors.primary}]} name="cloud-off" size={35} />
+          <Text style={{color: CustomTheme.colors.primary}}>Not Available</Text>
         </View>
-      <CustomFooter/>
-    </>
+      <CustomFooter Current="Dashboard"/>
+    </PaperProvider>
   );
 };
 
@@ -28,8 +41,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   Icon: {
-    fontSize: 80,
-    color: 'rgb(122,122,122)'
+    fontSize: 80
   }
 });
 

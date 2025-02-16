@@ -1,40 +1,58 @@
+import React from 'react';
+import { StyleSheet, View, useColorScheme } from 'react-native';
+import { PaperProvider, DefaultTheme } from "react-native-paper";
 import { Link } from 'expo-router';
-import { StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const CustomFooter = () => {
+import { Colors } from "./constants/Colors";
+import { CustomButtonStyle } from "./constants/Buttons";
+
+interface Props {
+  Current: string
+};
+
+const CustomFooter: React.FC<Props> = ({Current}) => {
+  const colorScheme = useColorScheme();
+  const CustomTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      ...Colors[colorScheme === 'dark' ? 'dark' : 'light']
+    },
+  };
+
   return (
-    <View style={styles.navContainer}>
-      <View style={styles.inlineContainer}>
-        <Link style={styles.navLink} href="/"><Icon style={styles.navIcon} name="home" size={35} /></Link>
-        <Link style={styles.navLink} href="/(tabs)/dashboard"><Icon style={styles.navIcon} name="dashboard" size={35} /></Link>
-        <Link style={styles.navLink} href="/(tabs)/settings"><Icon style={styles.navIcon} name="miscellaneous-services" size={35} /></Link>
+    <PaperProvider>
+      <View style={styles.navContainer}>
+        <View style={styles.inlineContainer}>
+          <Link style={styles.navLink} href="/(tabs)/home"><Icon color={Current.toLocaleLowerCase() === "home" ? CustomTheme.colors.tertiary : CustomTheme.colors.primary } name="home" size={28} /></Link>
+          <Link style={styles.navLink} href="/(tabs)/dashboard"><Icon color={Current.toLocaleLowerCase() === "dashboard" ? CustomTheme.colors.tertiary : CustomTheme.colors.primary }  name="dashboard" size={28} /></Link>
+          <Link style={styles.navLink} href="/(tabs)/settings"><Icon color={Current.toLocaleLowerCase() === "settings" ? CustomTheme.colors.tertiary : CustomTheme.colors.primary }  name="miscellaneous-services" size={28} /></Link>
+        </View>
       </View>
-    </View>
+    </PaperProvider>
   );
 };
 
 const styles = StyleSheet.create({
   navContainer: {
     width: '100%',
-    backgroundColor: 'rgb(255, 255, 255)',
     position: 'absolute',
-    bottom: 15,
+    bottom: 0,
     justifyContent: 'center', // Centers vertically
     alignItems: 'center', // Centers horizontally
     flex: 1,
-    paddingVertical: 15
+    paddingVertical: 15,
+    height: 80
   },
   inlineContainer: {
     flexDirection: 'row', // Makes children (Text + Link) inline
     alignItems: 'center', // Aligns items vertically
   },
   navLink: {
-    marginLeft: 24,
-    marginRight: 24
-  },
-  navIcon: {
-    color: 'rgb(150, 150, 150)'
+    marginTop: 28,
+    marginLeft: 34,
+    marginRight: 34
   }
 });
 

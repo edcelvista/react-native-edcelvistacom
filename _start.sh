@@ -1,5 +1,7 @@
 #!/bin/bash
 # cd edcelvistacom
 # npm run android
-npm run ios
+# npm run ios
 # npm run web
+
+npx expo start 

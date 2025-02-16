@@ -1,71 +1,34 @@
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React from 'react';
+import { StyleSheet, View, useColorScheme } from 'react-native';
+import { PaperProvider, Button, Text, DefaultTheme } from 'react-native-paper';
+import { router } from 'expo-router';
 
-import CustomHeader from './_header';
-import CustomFooter from './_footer';
+import { Colors } from "./constants/Colors";
+import { CustomButtonStyle } from "./constants/Buttons";
 
 const HomeScreen = () => {
+  const colorScheme = useColorScheme();
+  const CustomTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      ...Colors[colorScheme === 'dark' ? 'dark' : 'light']
+    },
+  };
+  
+  const loginClick = () => {
+    router.push('/(tabs)/home', { relativeToDirectory: true });
+  };
+
   return (
-    <>
-      <CustomHeader Title="Home"/>
-        <ScrollView style={styles.scrollView}>
-          <Text style={styles.text}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </Text>
-          <Text style={styles.text}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </Text>
-          <Text style={styles.text}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </Text>
-          <Text style={styles.text}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </Text>
-          <Text style={styles.text}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </Text>
-          <Text style={styles.text}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </Text>
-        </ScrollView>
-      <CustomFooter/>
-    </>
+    <PaperProvider theme={CustomTheme}>
+      <View style={styles.screenLabelContainer}>
+        <Text style={[styles.screenLabelContainerText, {color: CustomTheme.colors.primary}]}>Hello!</Text>
+        <Text style={[styles.screenLabelContainerText2, {color: CustomTheme.colors.primary}]}>edcelvistacom</Text>
+      </View>
+      <Button textColor={CustomTheme.colors.onPrimary} buttonColor={CustomTheme.colors.primary} contentStyle={{flexDirection: 'row-reverse'}} icon="login" onPress={loginClick} mode="elevated" style={CustomButtonStyle.buttonGeneric}>Login</Button>
+      <Button textColor={CustomTheme.colors.onPrimary} buttonColor={CustomTheme.colors.primary} contentStyle={{flexDirection: 'row-reverse'}} icon="arrow-right-thin" onPress={loginClick} mode="elevated" style={CustomButtonStyle.buttonGeneric}>Create Account</Button>
+    </PaperProvider>
   );
 };
 
@@ -73,13 +36,25 @@ const styles = StyleSheet.create({
   mainWrapper: {
     flex: 1
   },
-  scrollView: {
-    backgroundColor: 'rgb(255, 255, 255)',
+  screenLabelContainer: {
+    height: '50%',
+    bottom: 0,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  screenLabelContainerText: {
+    fontSize: 69,
+    fontWeight: 800
+  },
+  screenLabelContainerText2: {
+    fontSize: 24,
+    fontWeight: 100
   },
   text: {
     fontSize: 12,
-    padding: 12,
-  },
+    padding: 12
+  }
 });
 
 export default HomeScreen

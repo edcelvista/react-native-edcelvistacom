@@ -6,6 +6,12 @@ module.exports = function(api) {
             jsxImportSource: "nativewind"
         }], "nativewind/babel"],
 
+        env: {
+            production: {
+              plugins: ['react-native-paper/babel'],
+            },
+        },
+
         plugins: [["module-resolver", {
             root: ["./"],
 

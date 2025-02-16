@@ -1,4 +1,8 @@
 #!/bin/bash
-npx react-devtools
 npx create-expo-app@latest
-npm i --save-dev @types/react-native-vector-icons
+npx react-devtools
+npx expo install expo-dev-client
+
+npm install react-native-paper
+npm install react-native-safe-area-context
+npm install react-native-vector-icons
